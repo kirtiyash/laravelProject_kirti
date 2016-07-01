@@ -12,11 +12,15 @@
 */
 
 Route::get('signup','HomeController@signupform');
-Route::get('signme', 'HomeController@signme');
 Route::post('test/auth','HomeController@postAuth');
 Route::get('test/profile','HomeController@show');
+Route::get('test/friends','HomeController@showAll');
+Route::get('test/manipulate','HomeController@manipulate');
+Route::get('test/update','HomeController@edit');
+Route::post('edit','HomeController@update');
 Route::post('registered','HomeController@showRegister');
-Route::get('logout','HomeController@logOut');
+Route::post('delete', 'HomeController@delete');
+Route::get('test/logout','HomeController@logOut');
 
 
 

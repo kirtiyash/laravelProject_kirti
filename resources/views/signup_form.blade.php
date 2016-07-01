@@ -19,12 +19,13 @@
     {!! Form::open(array('url' => 'test/auth')) !!}
     <div class="form-group">
         {!! Form::label('email') !!}
-        {!! Form::text('email','',array('class' =>'form-control','id'=>"email","placeholder"=>'email address')) !!}
-        
+        {!! Form::text('email','',array('class' =>'form-control','id'=>"email","placeholder"=>'     email address')) !!}
+        <i class="glyphicon glyphicon-envelope" id="icon" align="left"></i>
     </div>
     <div class="form-group">
         {!! Form::label('password') !!}
         {!! Form::password('password',array('class' =>'form-control')) !!}
+        <i class="glyphicon glyphicon-briefcase" id="icon" align="left"></i>
     </div>
      
     {!! Form::submit('login',array('class'=>'btn btn-primary','name'=>'login')) !!}

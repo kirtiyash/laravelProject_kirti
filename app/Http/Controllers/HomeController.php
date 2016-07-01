@@ -27,7 +27,7 @@ class HomeController extends Controller
      
     public function postAuth(Request $request)
     {
-        //check which submit was clicked on naddepending on that profile page or redirection occurs
+        //check which submit was clicked on which button depending on that profile page or redirection occurs
         if(Input::get('login')) {
             
             $validator=Validator::make(
@@ -63,13 +63,58 @@ class HomeController extends Controller
     }
      public function show()
      {
+        //function for displaing user profile
         $id=Session::get('sid');
         $data=Test::where('user_id', $id)->get();
         return view('profile')->with('users',$data);
      }
+    
+     public function manipulate()
+     {
+        //function for updating the already created record in the filemaker
+        //$id=Session::get('sid');
+        //Test::where('user_id', $id)
+             //->update(['name' => $request->name]);
+            
+        //Session::flash('flash_message', 'hello');
+        return view('manipulate');
+     }
+     public function edit(Request $request)
+     {
+        $id=Session::get('sid');
+        $data=Test::where('user_id', $id)->get();
+        return view('update')->with('users',$data);
+        
+     }
+     public function update(Request $request)
+     {
+         $id=Session::get('sid');
+         $test = Test::find($id);
+         $test->name = $request->name;
+         $test->age = $request->age;
+         $test->gender = $request->gender;
+         $test->address = $request->address;
+         $test->email = $request->email;
+         $test->save();
+         Session::flash('flash_message', 'Information successfully updated!');
+         return view('edit');
+     }
+      
+      public function delete($id)
+      {
+        //dd($id);
+        Session::flash('flash_message', 'Information successfully deleted!');
+        return view('delete');
+        //functiom for deleting record from the filemake
+        $data=Test::find($id);
+        $data->delete();
+        
+     }
+     
      
      public function showRegister(Request $request)
      {
+        //function for creating a record in filemaker
         $test = new Test;
         $test->name = $request->name;
         $test->age = $request->age;
@@ -78,9 +123,17 @@ class HomeController extends Controller
         $test->email = $request->email;
         $test->password = $request->password;
         $test->save();
+        Session::flash('flash_message', 'Information successfully added!');
+        return view('registered');
+     }
+     public function showAll()
+     {
+        $data=Test::all();
+        return view('friends')->with('users',$data);
      }
      public function logOut(Request $request)
      {
+        //function for logging out from session
         $id=Session::get('sid');
         $request->Session()->forget($id);
         return redirect('signup');
